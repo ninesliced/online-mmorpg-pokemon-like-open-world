@@ -3,9 +3,9 @@ extends Node2D
 const DEFAULT_ADDRESS = "172.20.10.2"
 const PORT = 12345
 
-@onready var host_button: Button = $Control/JoinMenu/HostButton
-@onready var ip_input: TextEdit = $Control/JoinMenu/IPInput
-@onready var connect_button: Button = $Control/JoinMenu/ConnectButton
+@onready var host_button: Button = $Control/HostButton
+@onready var ip_input: TextEdit = $Control/IPInput
+@onready var connect_button: Button = $Control/ConnectButton
 @onready var chat: Chat = $Chat
 @onready var connected_player_label: Label = $Control/ConnectedPlayerLabel
 
