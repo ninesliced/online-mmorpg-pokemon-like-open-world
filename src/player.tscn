@@ -15,6 +15,8 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" unique_id=1158685969]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_gmfve")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=761670582]

@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 @export var multiplayer_position: Vector2 = Vector2.ZERO 
-@export var multiplayer_velocity: Vector2 = Vector2.ZERO 
+@export var multiplayer_input: Vector2 = Vector2.ZERO 
 
 var multiplayer_id = 0
 var is_authority = false
@@ -19,20 +19,24 @@ func _ready() -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	if is_authority:
-		handle_input()
-		move_and_slide()
-		multiplayer_position = global_position
-		multiplayer_velocity = velocity
-	else:
-		global_position += multiplayer_velocity*delta
+	handle_input()
+	move_and_slide()
+	multiplayer_position = global_position
+
 
 func handle_input():
-	var vec = Input.get_vector("game_left","game_right","game_up","game_down")
+	var vec
+	if is_authority:
+		vec = Input.get_vector("game_left","game_right","game_up","game_down")
+	else:
+		vec = multiplayer_input
+	
 	if vec:
 		velocity = velocity.move_toward(vec * max_speed, acceleration)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, acceleration)
+	multiplayer_input = vec
+
 
 func set_multiplayer(id: int):
 	multiplayer_id = id
