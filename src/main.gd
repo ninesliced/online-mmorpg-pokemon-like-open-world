@@ -22,7 +22,7 @@ func _on_connect_button_pressed() -> void:
 
 
 func _on_host_button_pressed() -> void:
-	pass # Replace with function body.
+	_create_server(int(port_input.text))
 
 
 func _create_client(server_ip: String, server_port: int):
