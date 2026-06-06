@@ -40,7 +40,7 @@ func _create_client(server_ip: String, server_port: int):
 		chat.add_message("Failed creating server err: %s" % [err])
 	else:
 		print("Id: ", multiplayer.get_unique_id())
-		chat.add_message("Created server at port %s" % [server_port])
+		chat.add_message("Created client to server %s:%s" % [server_ip, server_port])
 	
 
 
@@ -53,7 +53,7 @@ func _create_server(port: int):
 		chat.add_message("Failed connecting err: %s" % [err])
 	else:
 		print("Id: ", multiplayer.get_unique_id())
-		chat.add_message("Created peer: %s" % [err])
+		chat.add_message("Created server at port %s" % [port])
 
 
 func add_player(id: int):
