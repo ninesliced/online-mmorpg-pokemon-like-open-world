@@ -17,6 +17,7 @@ func _ready() -> void:
 	multiplayer.server_disconnected.connect(_server_disconnected)
 	
 	$MultiplayerSpawner.add_spawnable_scene("res://src/player.tscn")
+	$MultiplayerSpawner.set_spawn_function(add_player)
 	
 
 
@@ -36,7 +37,10 @@ func _create_client(server_ip: String, server_port: int):
 	multiplayer.multiplayer_peer = peer
 	if err:
 		print("Error client: ", err)
-	print("Id: ", multiplayer.get_unique_id())
+		chat.add_message("Failed creating server err: %s" % [err])
+	else:
+		print("Id: ", multiplayer.get_unique_id())
+		chat.add_message("Created server at port %s" % [server_port])
 	
 
 
@@ -46,25 +50,39 @@ func _create_server(port: int):
 	multiplayer.multiplayer_peer = peer
 	if err:
 		print("Error server: ", err)
-	print("Id: ", multiplayer.get_unique_id())
+		chat.add_message("Failed connecting err: %s" % [err])
+	else:
+		print("Id: ", multiplayer.get_unique_id())
+		chat.add_message("Created peer: %s" % [err])
+
+
+func add_player(id: int):
+	var player: Player = player_scene.instantiate()
+	player.position = Vector2(randf_range(30,300), randf_range(30,300))
+	player.set_multiplayer(id)
+	return player
 
 
 ## Signaux
 func _player_connected(id: int):
 	print("_player_connected %s" % [id])
+	chat.add_message("Player connected %s" % [id])
+	
 	if multiplayer.is_server():
-		var player = player_scene.instantiate()
-		$Game.add_child(player)
-		player.set_multiplayer(id)
+		$MultiplayerSpawner.spawn(id)
 
 func _player_disconnected(id: int):
 	print("_player_disconnected %s" % [id])
+	chat.add_message("Player disconnected %s" % [id])
 
 func _connected_ok():
 	print("_connected_ok")
+	chat.add_message("Connected successfully")
 
 func _connected_fail():
 	print("_connected_fail")
+	chat.add_message("Connected failed")
 
 func _server_disconnected():
 	print("_server_disconnected")
+	chat.add_message("Server disconnected")
