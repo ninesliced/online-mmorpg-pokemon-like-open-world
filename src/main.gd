@@ -5,12 +5,9 @@ const PORT = 12345
 @onready var host_button: Button = $Control/HostButton
 @onready var ip_input: TextEdit = $Control/IPInput
 @onready var connect_button: Button = $Control/ConnectButton
-@onready var host_button: Button = $Control/JoinMenu/HostButton
-@onready var ip_input: TextEdit = $Control/JoinMenu/IPInput
-@onready var connect_button: Button = $Control/JoinMenu/ConnectButton
 @onready var chat: Chat = $Chat
 @onready var connected_player_label: Label = $Control/ConnectedPlayerLabel
-
+var player_scene = preload("res://src/player.tscn")
 
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_player_connected)
@@ -18,6 +15,9 @@ func _ready() -> void:
 	multiplayer.connected_to_server.connect(_connected_ok)
 	multiplayer.connection_failed.connect(_connected_fail)
 	multiplayer.server_disconnected.connect(_server_disconnected)
+	
+	$MultiplayerSpawner.add_spawnable_scene("res://src/player.tscn")
+	
 
 
 func _on_connect_button_pressed() -> void:
@@ -52,8 +52,10 @@ func _create_server(port: int):
 ## Signaux
 func _player_connected(id: int):
 	print("_player_connected %s" % [id])
-	if is_multiplayer_authority():
-		$Game/MultiplayerSpawner.add_spawnable_scene("res://src/player.tscn")
+	if multiplayer.is_server():
+		var player = player_scene.instantiate()
+		$Game.add_child(player)
+		player.set_multiplayer(id)
 
 func _player_disconnected(id: int):
 	print("_player_disconnected %s" % [id])

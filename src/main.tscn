@@ -95,6 +95,11 @@ offset_bottom = 628.0
 text = "Send
 "
 
+[node name="Game" type="Node2D" parent="." unique_id=1505397327]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=2021474623]
+spawn_path = NodePath("../Game")
+
 [connection signal="pressed" from="Control/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="Control/ConnectButton" to="." method="_on_connect_button_pressed"]
 [connection signal="pressed" from="Control/SendMessage" to="Chat" method="_on_send_message_pressed"]
