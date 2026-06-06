@@ -25,7 +25,7 @@ func _physics_process(delta: float) -> void:
 		multiplayer_position = global_position
 		multiplayer_velocity = velocity
 	else:
-		global_position = global_position.move_toward(multiplayer_position, 1000.0*delta)
+		global_position += multiplayer_velocity*delta
 
 func handle_input():
 	var vec = Input.get_vector("game_left","game_right","game_up","game_down")
@@ -36,3 +36,7 @@ func handle_input():
 
 func set_multiplayer(id: int):
 	multiplayer_id = id
+
+
+func _on_multiplayer_synchronizer_synchronized() -> void:
+	global_position = multiplayer_position

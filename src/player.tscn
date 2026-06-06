@@ -25,3 +25,5 @@ texture = ExtResource("1_lowyb")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1948760595]
 replication_config = SubResource("SceneReplicationConfig_gmfve")
+
+[connection signal="synchronized" from="MultiplayerSynchronizer" to="." method="_on_multiplayer_synchronizer_synchronized"]
