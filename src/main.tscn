@@ -1,3 +1,39 @@
 [gd_scene format=3 uid="uid://8swfbdhatu5g"]
 
+[ext_resource type="Script" uid="uid://bvmi4msupwiff" path="res://src/main.gd" id="1_eewff"]
+
 [node name="Main" type="Node2D" unique_id=826814269]
+script = ExtResource("1_eewff")
+
+[node name="Control" type="Control" parent="." unique_id=1636701266]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HostButton" type="Button" parent="Control" unique_id=720113158]
+layout_mode = 0
+offset_left = 493.0
+offset_top = 206.0
+offset_right = 615.0
+offset_bottom = 237.0
+text = "Host"
+
+[node name="IPInput" type="TextEdit" parent="Control" unique_id=1716692910]
+layout_mode = 0
+offset_left = 403.0
+offset_top = 324.0
+offset_right = 729.0
+offset_bottom = 364.0
+placeholder_text = "IP address"
+
+[node name="ConnectButton" type="Button" parent="Control" unique_id=813196032]
+layout_mode = 0
+offset_left = 493.0
+offset_top = 376.0
+offset_right = 621.0
+offset_bottom = 407.0
+text = "Connect"
+
+[connection signal="pressed" from="Control/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="Control/ConnectButton" to="." method="_on_connect_button_pressed"]
