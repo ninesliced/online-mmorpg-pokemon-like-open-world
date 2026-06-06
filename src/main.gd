@@ -1,13 +1,15 @@
 extends Node2D
 
+const DEFAULT_ADDRESS = "172.20.10.2"
 const PORT = 12345
 
-@onready var host_button: Button = $Control/HostButton
-@onready var ip_input: TextEdit = $Control/IPInput
-@onready var connect_button: Button = $Control/ConnectButton
-@onready var chat_log: Label = $Control/ChatLog
-@onready var chat_input: TextEdit = $Control/ChatInput
+@onready var host_button: Button = $Control/JoinMenu/HostButton
+@onready var ip_input: TextEdit = $Control/JoinMenu/IPInput
+@onready var connect_button: Button = $Control/JoinMenu/ConnectButton
+@onready var chat: Chat = $Chat
+@onready var connected_player_label: Label = $Control/ConnectedPlayerLabel
 
+var players = {}
 
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_player_connected)
@@ -16,10 +18,21 @@ func _ready() -> void:
 	multiplayer.connection_failed.connect(_connected_fail)
 	multiplayer.server_disconnected.connect(_server_disconnected)
 
+func _process(delta: float) -> void:
+	connected_player_label.text = "Connected: "
+	var players_sorted = players.keys()
+	players_sorted.sort()
+	for player in players_sorted:
+		connected_player_label.text += str(player) + ", "
+
+## Buttons
 
 func _on_connect_button_pressed() -> void:
-	print("Connecting to %s:%s" % [ip_input.text, str(PORT)])
-	_create_client(ip_input.text, PORT)
+	var ip = DEFAULT_ADDRESS
+	if not ip_input.text.is_empty():
+		ip = ip_input.text
+	print("Connecting to %s:%s" % [ip, str(PORT)])
+	_create_client(ip, PORT)
 
 
 func _on_host_button_pressed() -> void:
@@ -34,6 +47,7 @@ func _create_client(server_ip: String, server_port: int):
 	if err:
 		print("Error client: ", err)
 	print("Id: ", multiplayer.get_unique_id())
+	chat.add_message("Connected to %s:%s" % [server_ip, server_port])
 
 
 func _create_server(port: int):
@@ -43,32 +57,30 @@ func _create_server(port: int):
 	if err:
 		print("Error server: ", err)
 	print("Id: ", multiplayer.get_unique_id())
+	chat.add_message("Server created at port %s" % [port])
+	
 
 
 ## Signaux
 
 func _player_connected(id: int):
 	print("_player_connected %s" % [id])
+	chat.add_message("Player connected: id = %s" % [id])
+	players[id] = true
 
 func _player_disconnected(id: int):
 	print("_player_disconnected %s" % [id])
+	chat.add_message("Player disconnected: id = %s" % [id])
+	players[id] = false
 
 func _connected_ok():
+	chat.add_message("Successfully connected to server")
 	print("_connected_ok")
 
 func _connected_fail():
+	chat.add_message("Failed connection to server")
 	print("_connected_fail")
 
 func _server_disconnected():
+	chat.add_message("Server disconnected")
 	print("_server_disconnected")
-
-
-## Chat
-
-func _on_send_message_pressed() -> void:
-	add_message.rpc(chat_input.text)
-
-@rpc("any_peer", "call_local")
-func add_message(message: String):
-	var remote_id = multiplayer.get_remote_sender_id()
-	chat_log.text += "\n%s : %s" % [remote_id, message]

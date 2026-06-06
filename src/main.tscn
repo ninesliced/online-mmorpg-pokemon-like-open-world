@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://8swfbdhatu5g"]
 
 [ext_resource type="Script" uid="uid://bvmi4msupwiff" path="res://src/main.gd" id="1_eewff"]
+[ext_resource type="Script" uid="uid://cki4rbc7c6grl" path="res://src/chat.gd" id="2_gh0ne"]
 
 [node name="Main" type="Node2D" unique_id=826814269]
 script = ExtResource("1_eewff")
+
+[node name="Chat" type="Node" parent="." unique_id=1075116334]
+script = ExtResource("2_gh0ne")
 
 [node name="Control" type="Control" parent="." unique_id=1636701266]
 layout_mode = 3
@@ -11,50 +15,69 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="HostButton" type="Button" parent="Control" unique_id=720113158]
+[node name="ConnectedPlayerLabel" type="Label" parent="Control" unique_id=1692165613]
 layout_mode = 0
-offset_left = 180.0
-offset_top = 190.0
-offset_right = 302.0
-offset_bottom = 221.0
+offset_left = 162.0
+offset_top = 9.0
+offset_right = 462.0
+offset_bottom = 49.0
+text = "Connected: xxx, xxx"
+
+[node name="JoinMenu" type="Control" parent="Control" unique_id=1844937207]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 13.0
+offset_right = 154.0
+offset_bottom = 136.0
+
+[node name="HostButton" type="Button" parent="Control/JoinMenu" unique_id=720113158]
+layout_mode = 0
+offset_right = 122.0
+offset_bottom = 31.0
 text = "Host"
 
-[node name="IPInput" type="TextEdit" parent="Control" unique_id=1716692910]
+[node name="IPInput" type="TextEdit" parent="Control/JoinMenu" unique_id=1716692910]
 layout_mode = 0
-offset_left = 90.0
-offset_top = 356.0
-offset_right = 416.0
-offset_bottom = 396.0
+offset_left = 2.0
+offset_top = 36.0
+offset_right = 127.0
+offset_bottom = 76.0
 placeholder_text = "IP address"
 
-[node name="ConnectButton" type="Button" parent="Control" unique_id=813196032]
+[node name="ConnectButton" type="Button" parent="Control/JoinMenu" unique_id=813196032]
 layout_mode = 0
-offset_left = 180.0
-offset_top = 409.0
-offset_right = 308.0
-offset_bottom = 440.0
+offset_top = 83.0
+offset_right = 128.0
+offset_bottom = 114.0
 text = "Connect"
 
 [node name="ColorRect" type="ColorRect" parent="Control" unique_id=8447933]
 layout_mode = 0
-offset_left = 552.0
+offset_left = 805.0
 offset_top = 4.0
 offset_right = 1149.0
 offset_bottom = 644.0
 color = Color(0.12941177, 0.12941177, 0.12941177, 0.14901961)
 
+[node name="ColorRect2" type="ColorRect" parent="Control" unique_id=1120693536]
+layout_mode = 0
+offset_left = -2.0
+offset_right = 154.0
+offset_bottom = 140.0
+color = Color(0.12941177, 0.12941177, 0.12941177, 0.14901961)
+
 [node name="Chat" type="Label" parent="Control" unique_id=1448346708]
 layout_mode = 0
-offset_left = 582.0
-offset_top = 24.0
-offset_right = 1118.0
-offset_bottom = 64.0
+offset_left = 818.0
+offset_top = 12.0
+offset_right = 1131.0
+offset_bottom = 52.0
 text = "CHAT"
 horizontal_alignment = 1
 
 [node name="ChatInput" type="TextEdit" parent="Control" unique_id=1554079707]
 layout_mode = 0
-offset_left = 585.0
+offset_left = 823.0
 offset_top = 594.0
 offset_right = 1021.0
 offset_bottom = 634.0
@@ -62,10 +85,10 @@ placeholder_text = "Chat"
 
 [node name="ChatLog" type="Label" parent="Control" unique_id=2052932129]
 layout_mode = 0
-offset_left = 585.0
+offset_left = 821.0
 offset_top = 76.0
-offset_right = 1121.0
-offset_bottom = 562.0
+offset_right = 1134.0
+offset_bottom = 575.0
 
 [node name="SendMessage" type="Button" parent="Control" unique_id=1361253176]
 layout_mode = 0
@@ -76,6 +99,6 @@ offset_bottom = 628.0
 text = "Send
 "
 
-[connection signal="pressed" from="Control/HostButton" to="." method="_on_host_button_pressed"]
-[connection signal="pressed" from="Control/ConnectButton" to="." method="_on_connect_button_pressed"]
-[connection signal="pressed" from="Control/SendMessage" to="." method="_on_send_message_pressed"]
+[connection signal="pressed" from="Control/JoinMenu/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="Control/JoinMenu/ConnectButton" to="." method="_on_connect_button_pressed"]
+[connection signal="pressed" from="Control/SendMessage" to="Chat" method="_on_send_message_pressed"]
