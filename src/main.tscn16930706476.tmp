@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://8swfbdhatu5g"]
+
+[ext_resource type="Script" uid="uid://bvmi4msupwiff" path="res://src/main.gd" id="1_eewff"]
+[ext_resource type="Script" uid="uid://cki4rbc7c6grl" path="res://src/chat.gd" id="2_gh0ne"]
+
+[node name="Main" type="Node2D" unique_id=826814269]
+script = ExtResource("1_eewff")
+
+[node name="Chat" type="Node" parent="." unique_id=1075116334]
+script = ExtResource("2_gh0ne")
+
+[node name="Control" type="Control" parent="." unique_id=1636701266]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1150.0
+offset_bottom = 644.0
+
+[node name="ConnectedPlayerLabel" type="Label" parent="Control" unique_id=1692165613]
+layout_mode = 0
+offset_left = 162.0
+offset_top = 9.0
+offset_right = 462.0
+offset_bottom = 49.0
+text = "Connected: xxx, xxx"
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=8447933]
+layout_mode = 0
+offset_left = 805.0
+offset_top = 4.0
+offset_right = 1149.0
+offset_bottom = 644.0
+color = Color(0.12941177, 0.12941177, 0.12941177, 0.14901961)
+
+[node name="ColorRect2" type="ColorRect" parent="Control" unique_id=1120693536]
+layout_mode = 0
+offset_left = -2.0
+offset_right = 154.0
+offset_bottom = 140.0
+color = Color(0.12941177, 0.12941177, 0.12941177, 0.14901961)
+
+[node name="HostButton" type="Button" parent="Control" unique_id=720113158]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 13.0
+offset_right = 138.0
+offset_bottom = 44.0
+text = "Host"
+
+[node name="IPInput" type="TextEdit" parent="Control" unique_id=1716692910]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 49.0
+offset_right = 143.0
+offset_bottom = 89.0
+placeholder_text = "IP address"
+
+[node name="ConnectButton" type="Button" parent="Control" unique_id=813196032]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 96.0
+offset_right = 144.0
+offset_bottom = 127.0
+text = "Connect"
+
+[node name="Chat" type="Label" parent="Control" unique_id=1448346708]
+layout_mode = 0
+offset_left = 818.0
+offset_top = 12.0
+offset_right = 1131.0
+offset_bottom = 52.0
+text = "CHAT"
+horizontal_alignment = 1
+
+[node name="ChatInput" type="TextEdit" parent="Control" unique_id=1554079707]
+layout_mode = 0
+offset_left = 823.0
+offset_top = 594.0
+offset_right = 1021.0
+offset_bottom = 634.0
+placeholder_text = "Chat"
+
+[node name="ChatLog" type="Label" parent="Control" unique_id=2052932129]
+layout_mode = 0
+offset_left = 821.0
+offset_top = 76.0
+offset_right = 1134.0
+offset_bottom = 575.0
+
+[node name="SendMessage" type="Button" parent="Control" unique_id=1361253176]
+layout_mode = 0
+offset_left = 1031.0
+offset_top = 597.0
+offset_right = 1120.0
+offset_bottom = 628.0
+text = "Send
+"
+
+[node name="Game" type="Node2D" parent="." unique_id=1505397327]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=2021474623]
+spawn_path = NodePath("../Game")
+
+[connection signal="pressed" from="Control/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="Control/ConnectButton" to="." method="_on_connect_button_pressed"]
+[connection signal="pressed" from="Control/SendMessage" to="Chat" method="_on_send_message_pressed"]
