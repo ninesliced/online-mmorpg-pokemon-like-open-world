@@ -23,6 +23,21 @@ offset_right = 462.0
 offset_bottom = 49.0
 text = "Connected: xxx, xxx"
 
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=8447933]
+layout_mode = 0
+offset_left = 805.0
+offset_top = 4.0
+offset_right = 1149.0
+offset_bottom = 644.0
+color = Color(0.12941177, 0.12941177, 0.12941177, 0.14901961)
+
+[node name="ColorRect2" type="ColorRect" parent="Control" unique_id=1120693536]
+layout_mode = 0
+offset_left = -2.0
+offset_right = 154.0
+offset_bottom = 140.0
+color = Color(0.12941177, 0.12941177, 0.12941177, 0.14901961)
+
 [node name="JoinMenu" type="Control" parent="Control" unique_id=1844937207]
 anchors_preset = 0
 offset_left = 16.0
@@ -50,21 +65,6 @@ offset_top = 83.0
 offset_right = 128.0
 offset_bottom = 114.0
 text = "Connect"
-
-[node name="ColorRect" type="ColorRect" parent="Control" unique_id=8447933]
-layout_mode = 0
-offset_left = 805.0
-offset_top = 4.0
-offset_right = 1149.0
-offset_bottom = 644.0
-color = Color(0.12941177, 0.12941177, 0.12941177, 0.14901961)
-
-[node name="ColorRect2" type="ColorRect" parent="Control" unique_id=1120693536]
-layout_mode = 0
-offset_left = -2.0
-offset_right = 154.0
-offset_bottom = 140.0
-color = Color(0.12941177, 0.12941177, 0.12941177, 0.14901961)
 
 [node name="Chat" type="Label" parent="Control" unique_id=1448346708]
 layout_mode = 0
@@ -98,6 +98,11 @@ offset_right = 1120.0
 offset_bottom = 628.0
 text = "Send
 "
+
+[node name="Game" type="Node2D" parent="." unique_id=429545264]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Game" unique_id=767118227]
+spawn_path = NodePath("..")
 
 [connection signal="pressed" from="Control/JoinMenu/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="Control/JoinMenu/ConnectButton" to="." method="_on_connect_button_pressed"]
