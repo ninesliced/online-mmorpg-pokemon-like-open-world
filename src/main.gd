@@ -1,11 +1,13 @@
 extends Node2D
 
-const IP_ADDRESS = ""
+const PORT = 12345
 
 @onready var host_button: Button = $Control/HostButton
 @onready var ip_input: TextEdit = $Control/IPInput
 @onready var port_input: TextEdit = $Control/PortInput
 @onready var connect_button: Button = $Control/ConnectButton
+@onready var chat_log: Label = $Control/ChatLog
+@onready var chat_input: TextEdit = $Control/ChatInput
 
 
 func _ready() -> void:
@@ -17,13 +19,13 @@ func _ready() -> void:
 
 
 func _on_connect_button_pressed() -> void:
-	print("Connecting to %s:%s" % [ip_input.text, port_input.text])
-	_create_client(ip_input.text, int(port_input.text))
+	print("Connecting to %s:%s" % [ip_input.text, str(PORT)])
+	_create_client(ip_input.text, PORT)
 
 
 func _on_host_button_pressed() -> void:
 	print("Hosting")
-	_create_server(int(port_input.text))
+	_create_server(PORT)
 
 
 func _create_client(server_ip: String, server_port: int):
@@ -60,3 +62,14 @@ func _connected_fail():
 
 func _server_disconnected():
 	print("_server_disconnected")
+
+
+## Chat
+
+func _on_send_message_pressed() -> void:
+	add_message.rpc(chat_input.text)
+
+@rpc("any_peer", "call_local")
+func add_message(message: String):
+	var remote_id = multiplayer.get_remote_sender_id()
+	chat_log.text += "\n%s : %s" % [remote_id, message]
