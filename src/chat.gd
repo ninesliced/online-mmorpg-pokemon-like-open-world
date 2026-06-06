@@ -5,7 +5,7 @@ extends Node
 @onready var chat_input: TextEdit = $"../Control/ChatInput"
 
 func _send_chat_message(msg: String):
-	add_message(msg)
+	add_message.rpc(msg)
 	_clear_chat_input()
 
 func _clear_chat_input():
