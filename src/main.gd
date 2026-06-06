@@ -4,7 +4,6 @@ const PORT = 12345
 
 @onready var host_button: Button = $Control/HostButton
 @onready var ip_input: TextEdit = $Control/IPInput
-@onready var port_input: TextEdit = $Control/PortInput
 @onready var connect_button: Button = $Control/ConnectButton
 @onready var chat_log: Label = $Control/ChatLog
 @onready var chat_input: TextEdit = $Control/ChatInput
