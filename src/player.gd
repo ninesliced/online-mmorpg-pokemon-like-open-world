@@ -7,6 +7,9 @@ var acceleration = 50.0
 var max_speed = 500.0
 
 func _physics_process(delta: float) -> void:
+	if not is_authority:
+		return
+	
 	var vec = Input.get_vector("game_left","game_right","game_up","game_down")
 	if vec:
 		velocity = velocity.move_toward(vec * max_speed, acceleration)
@@ -18,3 +21,4 @@ func _physics_process(delta: float) -> void:
 func set_multiplayer(id: int):
 	multiplayer_id = id
 	is_authority = (id == multiplayer.get_unique_id())
+	set_multiplayer_authority(id)
