@@ -22,19 +22,26 @@ func _on_connect_button_pressed() -> void:
 
 
 func _on_host_button_pressed() -> void:
+	print("Hosting")
 	_create_server(int(port_input.text))
 
 
 func _create_client(server_ip: String, server_port: int):
 	var peer = ENetMultiplayerPeer.new()
-	peer.create_client(server_ip, server_port)
+	var err = peer.create_client(server_ip, server_port)
 	multiplayer.multiplayer_peer = peer
+	if err:
+		print("Error client: ", err)
+	print("Id: ", multiplayer.get_unique_id())
 
 
 func _create_server(port: int):
 	var peer = ENetMultiplayerPeer.new()
-	peer.create_server(port)
+	var err = peer.create_server(port)
 	multiplayer.multiplayer_peer = peer
+	if err:
+		print("Error server: ", err)
+	print("Id: ", multiplayer.get_unique_id())
 
 
 ## Signaux
